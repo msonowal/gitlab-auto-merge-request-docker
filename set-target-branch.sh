@@ -4,13 +4,14 @@ set -e
 if [ -z "$MERGE_MAP" ]; then
   echo "MERGE_MAP is not set/provided, using .gitlab-merge.json"
   #echo "Please set MERGE_MAP file path, refer sample as .gitlab-merge-sample-mapping"
-  MERGE_MAP=".gitlab-merge-sample-mapping.json"
+  MERGE_MAP=".gitlab-merge.json"
   #exit 0
 fi
 
 if [ ! -f "$MERGE_MAP" ]; then
     echo "MERGE_MAP File not found!"
-    exit 0
+    #exit 0
+    return
 fi
 
 if [ -z "$TARGET_BRANCH" ]; then
