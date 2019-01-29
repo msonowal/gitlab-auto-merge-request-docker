@@ -9,6 +9,10 @@ RUN apk add --no-cache \
 
 COPY set-target-branch.sh /usr/bin/
 
+RUN chmod +x /usr/bin/set-target-branch.sh
+
 COPY merge-request.sh /usr/bin/
+
+RUN chmod +x /usr/bin/merge-request.sh
 
 CMD ["merge-request.sh"]
