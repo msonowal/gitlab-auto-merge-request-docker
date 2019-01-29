@@ -42,7 +42,7 @@ set the MERGE_MAP variable which is json file that has key value mapping of sour
 
 ## Docker images
 
-The images are hosted on [Docker Hub](https://hub.docker.com/r/msonowal/gitlab-auto-merge-request-docker).
+The images are hosted on [Docker Hub](https://hub.docker.com/r/msonowal/gitlab-auto-mr).
 
 Two tags are noteworthy:
 * `latest`: Latest release on `master` branch of this project
