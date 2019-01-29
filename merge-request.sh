@@ -47,7 +47,7 @@ if [ -z "$TARGET_BRANCH" ]; then
 fi
 
 # If Source and Target branch is same then exit.
-if [ "${CI_COMMIT_REF_NAME}" -eq "${TARGET_BRANCH}" ]; then
+if [ "${CI_COMMIT_REF_NAME}" = "${TARGET_BRANCH}" ]; then
   echo "Source and Target branch is must be different!"
   echo "Source: ${CI_COMMIT_REF_NAME}"
   echo "Target: ${TARGET_BRANCH}"
