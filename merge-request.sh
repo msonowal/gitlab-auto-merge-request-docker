@@ -32,8 +32,12 @@ fi
 # Extract the host where the server is running, and add the URL to the APIs
 [[ $CI_PROJECT_URL =~ ^https?://[^/]+ ]] && HOST="${BASH_REMATCH[0]}/api/v4/projects/"
 
-# Look which is the default branch
-TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
+if [ -z "$TARGET_BRANCH" ]; then
+  echo "TARGET_BRANCH not set"
+  echo "Determining Default branch to open the Merge request"
+  # Look which is the default branch
+  TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
+fi
 
 # If Source and Target branch is same then exit.
 if [ "${CI_COMMIT_REF_NAME}" -eq "${TARGET_BRANCH}" ]; then

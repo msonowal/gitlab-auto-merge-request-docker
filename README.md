@@ -33,9 +33,11 @@ Open Merge Request:
   only:
     - /^feature\/*/ # Means on which branch the automerge will be executed, here we are saying the branches starts with name feature, We have a very strict naming convention
   script:
-    #- HOST=${CI_PROJECT_URL} CI_PROJECT_ID=${CI_PROJECT_ID} CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME} GITLAB_USER_ID=${GITLAB_USER_ID} PRIVATE_TOKEN=${GITLAB_PRIVATE_TOKEN} ./merge-request.sh 
     - merge-request.sh # The name of the script
 ```
+
+
+set the variable `TARGET_BRANCH` on the branch where you want the merge request to be placed by default it will determine the default branch, otherwise it will use the target branch
 
 ## Docker images
 
