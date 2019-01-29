@@ -7,6 +7,8 @@ RUN apk add --no-cache \
   grep \
   jq
 
+COPY set-target-branch.sh /usr/bin/
+
 COPY merge-request.sh /usr/bin/
 
 CMD ["merge-request.sh"]

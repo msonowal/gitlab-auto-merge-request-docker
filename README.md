@@ -36,8 +36,9 @@ Open Merge Request:
     - merge-request.sh # The name of the script
 ```
 
+set the MERGE_MAP variable which is json file that has key value mapping of source and target branches mapping to open merge requests
 
-set the variable `TARGET_BRANCH` on the branch where you want the merge request to be placed by default it will determine the default branch, otherwise it will use the target branch
+<!-- set the variable `TARGET_BRANCH` on the branch where you want the merge request to be placed by default it will determine the default branch, otherwise it will use the target branch -->
 
 ## Docker images
 

@@ -7,6 +7,8 @@ if [ -z "$GITLAB_PRIVATE_TOKEN" ]; then
   exit 1
 fi
 
+source set-target-branch.sh
+
 # Conditional commit prefix, etc: WIP
 if [ -z "${COMMIT_PREFIX}" ]; then
   COMMIT_TITLE="${CI_COMMIT_REF_NAME}"
@@ -34,7 +36,7 @@ fi
 
 if [ -z "$TARGET_BRANCH" ]; then
   echo "TARGET_BRANCH not set"
-  echo "Determining Default branch to open the Merge request"
+  echo "Using Default branch to open the Merge request"
   # Look which is the default branch
   TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
 fi
