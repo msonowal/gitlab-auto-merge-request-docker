@@ -25,7 +25,7 @@ stages:
   - openMr
 
 Open Merge Request:
-  image: msonowal/gitlab-auto-merge-request-docker
+  image: msonowal/gitlab-auto-mr
   before_script: [] # We do not need any setup work, let's remove the global one (if any)
   variables:
     GIT_STRATEGY: none # We do not need a clone of the GIT repository to create a Merge Request
