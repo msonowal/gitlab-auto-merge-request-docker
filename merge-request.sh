@@ -80,7 +80,7 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
             --data "${BODY}" | jq '.iid'`;
     echo "Opened a new merge request: ${COMMIT_TITLE} and assigned";
 
-    if [ "$AUTO_MERGE" ]; then
+    if $AUTO_MERGE ; then
       BODY="{
           \"merge_when_pipeline_succeeds\": \"true\",
           \"squash\": \"${SQUASH}\"
@@ -91,8 +91,9 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
             --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" \
             --header "Content-Type: application/json" \
             --data "${BODY}";
-            
-      echo "Auto merging requested for ${COMMIT_TITLE} with iid ${IID}";
+           
+      printf "\n" 
+      echo "Auto merging requested for ${COMMIT_TITLE} with id ${IID}";
     fi
     exit;
 fi
