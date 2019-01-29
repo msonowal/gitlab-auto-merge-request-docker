@@ -27,18 +27,23 @@ if [ -z "${SQUASH}" ]; then
 fi
 
 # Conditional auto merge
-if [ -z "${AUTO_MERGE}" ]; then
-  AUTO_MERGE=false
-fi
+# if [ -z "${AUTO_MERGE}" ]; then
+#   AUTO_MERGE=false
+# fi
 
 # Extract the host where the server is running, and add the URL to the APIs
 [[ $CI_PROJECT_URL =~ ^https?://[^/]+ ]] && HOST="${BASH_REMATCH[0]}/api/v4/projects/"
 
 if [ -z "$TARGET_BRANCH" ]; then
   echo "TARGET_BRANCH not set"
-  echo "Using Default branch to open the Merge request"
-  # Look which is the default branch
-  TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
+  if [ -z "$FALLBACK_TARGET_BRANCH" ]; then
+    echo "Using Default branch to open the Merge request"
+    # Look which is the default branch
+    TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
+  else
+    echo "Using FALLBACK_TARGET_BRANCH branch to open the Merge request"
+      TARGET_BRANCH="${FALLBACK_TARGET_BRANCH}"
+  fi
 fi
 
 # If Source and Target branch is same then exit.
@@ -55,11 +60,11 @@ BODY="{
     \"id\": ${CI_PROJECT_ID},
     \"source_branch\": \"${CI_COMMIT_REF_NAME}\",
     \"target_branch\": \"${TARGET_BRANCH}\",
-    \"remove_source_branch\": \"${REMOVE_BRANCH_AFTER_MERGE}\",
     \"squash\": \"${SQUASH}\",
     \"title\": \"${COMMIT_TITLE}\",
     \"assignee_id\":\"${GITLAB_USER_ID}\"
 }";
+#
 
 # Require a list of all the merge request and take a look if there is already
 # one with the same source branch
@@ -77,10 +82,10 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
 
     if [ "$AUTO_MERGE" ]; then
       BODY="{
-          \"should_remove_source_branch\": \"${REMOVE_BRANCH_AFTER_MERGE}\",
           \"merge_when_pipeline_succeeds\": \"true\",
           \"squash\": \"${SQUASH}\"
       }";
+      #\"should_remove_source_branch\": \"${REMOVE_BRANCH_AFTER_MERGE}\",
 
       curl --silent -X PUT "${HOST}${CI_PROJECT_ID}/merge_requests/${IID}/merge" \
             --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" \

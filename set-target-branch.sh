@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+AUTO_MERGE=false
+
 if [ -z "$MERGE_MAP" ]; then
   echo "MERGE_MAP is not set/provided, using .gitlab-merge.json"
   #echo "Please set MERGE_MAP file path, refer sample as .gitlab-merge-sample-mapping"
@@ -9,7 +11,7 @@ if [ -z "$MERGE_MAP" ]; then
 fi
 
 if [ ! -f "$MERGE_MAP" ]; then
-    echo "MERGE_MAP File not found!"
+    echo "MERGE_MAP File ${MERGE_MAP} not found!"
     #exit 0
     return
 fi
@@ -26,4 +28,6 @@ if [ "$TARGET_BRANCH" == "null" ]; then
    echo "No mapping found in .gitlab-merge.json for creating merge request"
 else
    echo "Using TARGET_BRANCH ${TARGET_BRANCH}"
+   # Conditional auto merge
+  AUTO_MERGE=true
 fi
