@@ -18,12 +18,13 @@ if [ -z "$TARGET_BRANCH" ]; then
   echo "Determining Default branch to open the Merge request"
   # Look which is the default branch
   #TARGET_BRANCH=`cat .gitlab-merge-sample-mapping | jq ${CI_COMMIT_REF_NAME}`
-  TARGET_BRANCH=`cat ${MERGE_MAP}| jq '.["${CI_COMMIT_REF_NAME}"]'`
+  MERGE_TARGET=`cat ${MERGE_MAP}| jq '.["${CI_COMMIT_REF_NAME}"]'`
 fi
 
-if [ "$TARGET_BRANCH" == "null" ]; then
+if [ "$MERGE_TARGET" == "null" ]; then
    echo "No mapping found in .gitlab-merge.json for creating merge request"
 else
+   TARGET_BRANCH=$MERGE_TARGET
    echo "Using TARGET_BRANCH ${TARGET_BRANCH}"
    #Conditional auto merge if it is set to false or anything it will not execute else it will set as true when merge map matches
    if [ -z "$AUTO_MERGE" ]; then
