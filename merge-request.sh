@@ -42,15 +42,16 @@ if [ -z "$TARGET_BRANCH" ]; then
     TARGET_BRANCH=`curl --silent "${HOST}${CI_PROJECT_ID}" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" | jq --raw-output '.default_branch'`;
   else
     echo "Using FALLBACK_TARGET_BRANCH branch to open the Merge request"
-      TARGET_BRANCH="${FALLBACK_TARGET_BRANCH}"
+    TARGET_BRANCH="${FALLBACK_TARGET_BRANCH}"
   fi
 fi
+
+echo "Source: ${CI_COMMIT_REF_NAME}"
+echo "Target: ${TARGET_BRANCH}"
 
 # If Source and Target branch is same then exit.
 if [ "${CI_COMMIT_REF_NAME}" = "${TARGET_BRANCH}" ]; then
   echo "Source and Target branch is must be different!"
-  echo "Source: ${CI_COMMIT_REF_NAME}"
-  echo "Target: ${TARGET_BRANCH}"
   exit 1
 fi
 
@@ -78,7 +79,7 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
             --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" \
             --header "Content-Type: application/json" \
             --data "${BODY}" | jq '.iid'`;
-    echo "Opened a new merge request: ${COMMIT_TITLE} and assigned";
+    echo "Opened a new merge request: ${COMMIT_TITLE} and assigned with id ${IID}";
 
     if $AUTO_MERGE; then
       BODY="{
