@@ -77,13 +77,18 @@ COUNTBRANCHES=`echo ${LISTMR} | grep -o "\"source_branch\":\"${CI_COMMIT_REF_NAM
 echo "No MR found, let's create a new one"
 # No MR found, let's create a new one
 if [ ${COUNTBRANCHES} -eq "0" ]; then
-    echo 81
-    echo "${BODY}" | jq '.iid'
+    echo 80
+    echo ${BODY}
     
-    IID=`curl --silent -X POST "${HOST}${CI_PROJECT_ID}/merge_requests" \
+    response=`curl --silent -X POST "${HOST}${CI_PROJECT_ID}/merge_requests" \
             --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" \
             --header "Content-Type: application/json" \
-            --data "${BODY}" | jq '.iid'`;
+            --data "${BODY}"`;
+
+    echo response
+    echo 89
+    IID=`echo $response | .\"iid\"`
+    echo $IID
     echo "Opened a new merge request: ${COMMIT_TITLE} and assigned with id ${IID}";
 
     if $AUTO_MERGE; then
