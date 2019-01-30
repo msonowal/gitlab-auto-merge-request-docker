@@ -86,7 +86,6 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
             --data "${BODY}"`;
 
     echo $response
-    echo 89
     IID=`echo $response | jq .\"iid\"`
     echo $IID
     echo "Opened a new merge request: ${COMMIT_TITLE} and assigned with id ${IID}";
