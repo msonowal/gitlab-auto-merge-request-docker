@@ -53,8 +53,8 @@ echo "Target: ${TARGET_BRANCH}"
 
 # If Source and Target branch is same then exit.
 if [ "${CI_COMMIT_REF_NAME}" = "${TARGET_BRANCH}" ]; then
-  echo "Source and Target branch is must be different!"
-  exit 1
+  echo "Source and Target branch is must be different! Exiting!"
+  exit 0
 fi
 
 # The description of our new MR, we want to remove the branch after the MR has
