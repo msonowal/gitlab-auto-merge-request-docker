@@ -19,9 +19,8 @@ if [ -z "$TARGET_BRANCH" ]; then
   # Look which is the default branch
   #TARGET_BRANCH=`cat .gitlab-merge-sample-mapping | jq ${CI_COMMIT_REF_NAME}`
   cat ${MERGE_MAP}
-  SOURCE_KEY=$CI_COMMIT_REF_NAME
-  echo "SOURCE_KEY ${SOURCE_KEY}"
-  MERGE_TARGET=`cat ${MERGE_MAP}| jq '.[${SOURCE_KEY}]'`
+  echo "CI_COMMIT_REF_NAME: ${CI_COMMIT_REF_NAME}"
+  MERGE_TARGET=`cat ${MERGE_MAP} | jq .\"$CI_COMMIT_REF_NAME\"`
   echo "MERGE_TARGET: ${MERGE_TARGET}"
 fi
 
