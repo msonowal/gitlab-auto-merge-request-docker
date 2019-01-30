@@ -28,6 +28,10 @@ if [ "$TARGET_BRANCH" == "null" ]; then
    echo "No mapping found in .gitlab-merge.json for creating merge request"
 else
    echo "Using TARGET_BRANCH ${TARGET_BRANCH}"
-   # Conditional auto merge
-  AUTO_MERGE=true
+   #Conditional auto merge
+  if [ -z "${DISABLE_AUTO_MERGE}" ]; then
+    AUTO_MERGE=true
+  else
+    AUTO_MERGE=$DISABLE_AUTO_MERGE
+  fi
 fi
