@@ -85,9 +85,9 @@ if [ ${COUNTBRANCHES} -eq "0" ]; then
             --header "Content-Type: application/json" \
             --data "${BODY}"`;
 
-    echo response
+    echo $response
     echo 89
-    IID=`echo $response | .\"iid\"`
+    IID=`echo $response | jq .\"iid\"`
     echo $IID
     echo "Opened a new merge request: ${COMMIT_TITLE} and assigned with id ${IID}";
 
