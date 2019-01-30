@@ -74,9 +74,13 @@ BODY="{
 LISTMR=`curl --silent "${HOST}${CI_PROJECT_ID}/merge_requests?state=opened" --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}"`;
 COUNTBRANCHES=`echo ${LISTMR} | grep -o "\"source_branch\":\"${CI_COMMIT_REF_NAME}\"" | wc -l`;
 
+echo "No MR found, let's create a new one"
 # No MR found, let's create a new one
 if [ ${COUNTBRANCHES} -eq "0" ]; then
-
+    cat ${BODY}
+    echo 81
+    echo "${BODY}" | jq '.iid'
+    
     IID=`curl --silent -X POST "${HOST}${CI_PROJECT_ID}/merge_requests" \
             --header "PRIVATE-TOKEN:${GITLAB_PRIVATE_TOKEN}" \
             --header "Content-Type: application/json" \
