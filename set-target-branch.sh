@@ -18,7 +18,9 @@ if [ -z "$TARGET_BRANCH" ]; then
   echo "Determining Default branch to open the Merge request"
   # Look which is the default branch
   #TARGET_BRANCH=`cat .gitlab-merge-sample-mapping | jq ${CI_COMMIT_REF_NAME}`
+  cat ${MERGE_MAP}
   MERGE_TARGET=`cat ${MERGE_MAP}| jq '.["${CI_COMMIT_REF_NAME}"]'`
+  echo "MERGE_TARGET: ${MERGE_TARGET}"
 fi
 
 if [ "$MERGE_TARGET" == "null" ]; then
