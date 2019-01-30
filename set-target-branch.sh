@@ -23,6 +23,12 @@ fi
 
 if [ "$MERGE_TARGET" == "null" ]; then
    echo "No mapping found in .gitlab-merge.json for creating merge request"
+   if [ ! -z "$FALLBACK_TARGET_BRANCH" ]; then
+      if [ ! -z "$SQUASH" ]; then
+        echo "FALLBACK_TARGET_BRANCH is set and SQUASH not set, so setting squash to true when merge map not found"
+        SQUASH=true
+      fi
+    fi
 else
    TARGET_BRANCH=$MERGE_TARGET
    echo "Using TARGET_BRANCH ${TARGET_BRANCH}"
