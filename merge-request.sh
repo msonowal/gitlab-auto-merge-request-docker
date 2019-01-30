@@ -77,7 +77,6 @@ COUNTBRANCHES=`echo ${LISTMR} | grep -o "\"source_branch\":\"${CI_COMMIT_REF_NAM
 echo "No MR found, let's create a new one"
 # No MR found, let's create a new one
 if [ ${COUNTBRANCHES} -eq "0" ]; then
-    cat ${BODY}
     echo 81
     echo "${BODY}" | jq '.iid'
     
