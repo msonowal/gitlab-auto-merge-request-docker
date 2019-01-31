@@ -20,7 +20,8 @@ if [ -z "$TARGET_BRANCH" ]; then
   #TARGET_BRANCH=`cat .gitlab-merge-sample-mapping | jq ${CI_COMMIT_REF_NAME}`
   cat ${MERGE_MAP}
   echo "CI_COMMIT_REF_NAME: ${CI_COMMIT_REF_NAME}"
-  MERGE_TARGET=`cat ${MERGE_MAP} | jq .\"$CI_COMMIT_REF_NAME\"`
+  #MERGE_TARGET=`cat ${MERGE_MAP} | jq .\"$CI_COMMIT_REF_NAME\"`
+  MERGE_TARGET=`cat ${MERGE_MAP} | jq .\$CI_COMMIT_REF_NAME\`
   echo "MERGE_TARGET: ${MERGE_TARGET}"
 fi
 
